@@ -1,4 +1,5 @@
 const { makeExecutableSchema } = require('graphql-tools');
+const typeDefs = require('../common-graphql/types');
 
 // Some fake data
 const books = [
@@ -16,16 +17,6 @@ const books = [
   }
 ];
 
-// The GraphQL schema in string form
-const typeDefs = `
-  type Query { 
-    getBooksByTitle(title: ID!): [Book]
-    getBooksByAuthor(author: ID!): [Book]
-    books: [Book]
-  }
-  type Book { title: String, author: String }
-`;
-
 // All possible resolvers
 const resolvers = {
   Query: {
@@ -35,7 +26,7 @@ const resolvers = {
   }
 };
 
-// Put together a schema
+// Put together a typedefs
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers

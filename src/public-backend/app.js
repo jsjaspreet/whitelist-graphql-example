@@ -3,11 +3,11 @@ const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { OperationStore } = require('apollo-server-module-operation-store');
 const schema = require('./schema');
-const queries = require('../queries');
+const queries = require('../common-graphql/queries');
 
 
 // Create express app
-const PORT = process.env.BACKEND_PORT || 3030;
+const PORT = process.env.BACKEND_PORT || 3131;
 const app = express();
 
 // Create an operation store for whitelisting purposes
