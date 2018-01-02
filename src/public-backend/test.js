@@ -56,7 +56,7 @@ const anotherBlacklistedQuery = gql`
 
 // Comment out the line below to test the whitelist functionality in action
 
-// client.query({ query: whitelistedQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
-// client.query({ query: masqueradeQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
+client.query({ query: whitelistedQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
+client.query({ query: masqueradeQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
 client.query({ query: blacklistedQuery, variables: { title: 'Jurassic Park' } }).then((data) => console.log(data.data));
-// client.query({ query: anotherBlacklistedQuery }).then((data) => console.log(data.data));
+client.query({ query: anotherBlacklistedQuery }).then((data) => console.log(data.data));
