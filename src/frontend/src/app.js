@@ -1,20 +1,13 @@
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import React, {PureComponent} from 'react';
+const query = require('../../queries/books');
+
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
     uri: 'http://localhost:3030/graphql'
   }),
   connectToDevTools: true,
 });
-
-const query = gql`
-  {
-    books {
-      title
-      author
-    }
-  }
-`;
 
 const BookContainer = graphql(query);
 
