@@ -1,6 +1,6 @@
 const BooksQuery = `
   query books {
-    book {
+    books {
       author
       title
     }
