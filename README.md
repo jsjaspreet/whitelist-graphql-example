@@ -29,7 +29,7 @@ $ node src/public-backend/test.js
 ```
 
 `src/public-backend/app.js` contains the logic for using an `OperationStore` to house our known graphql queries for our graphql server. This
-is how we reject arbitrary queries from public facing clients. The proxying code is available in `src/public-backend/schema.js`. The schema used by the 
+is how we reject arbitrary queries from public facing clients. The proxying code is available in `src/public-backend/getSchema.js`. The schema used by the 
 public graphql server is a remote schema that simply proxies to our internal graphql server when the query is approved.
 
 

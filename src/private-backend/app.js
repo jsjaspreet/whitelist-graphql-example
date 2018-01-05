@@ -4,7 +4,7 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const schema = require('./schema');
 
 // Create express app
-const PORT = process.env.BACKEND_PORT || 3030;
+const PORT = 3030;
 const app = express();
 
 // Add routes

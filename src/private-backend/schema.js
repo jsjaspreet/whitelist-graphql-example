@@ -1,5 +1,5 @@
 const { makeExecutableSchema } = require('graphql-tools');
-const typeDefs = require('../common-graphql/types');
+const typeDefs = require('./types');
 
 // Some fake data
 const books = [

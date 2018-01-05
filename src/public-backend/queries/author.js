@@ -4,6 +4,7 @@ const AuthorQuery = `
     getBooksByAuthor(author: $author) {
       __typename
       title
+      author
     }
   }
 `;
