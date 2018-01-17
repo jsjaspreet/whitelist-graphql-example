@@ -3,6 +3,7 @@ const RootQuery = `
     getBooksByTitle(title: ID!): [Book]
     getBooksByAuthor(author: ID!): [Book]
     books: [Book]
+    vehicles: [Vehicle]
   }
 `;
 

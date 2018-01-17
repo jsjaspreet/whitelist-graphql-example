@@ -1,0 +1,1 @@
+{"__schema":{"types":[{"kind":"INTERFACE","name":"Vehicle","possibleTypes":[{"name":"Airplane"},{"name":"Car"}]}]}}

@@ -2,7 +2,13 @@ const { ApolloClient } = require('apollo-client');
 const fetch = require('node-fetch');
 const gql = require('graphql-tag');
 const { HttpLink } = require('apollo-link-http');
-const { InMemoryCache } = require('apollo-cache-inmemory');
+const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
+const introspectionQueryResultData = require('./fragmentTypes.json');
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
+
 
 // create a request client
 const client = new ApolloClient({
@@ -10,7 +16,7 @@ const client = new ApolloClient({
     uri: 'http://localhost:3030/graphql',
     fetch
   }),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache({ fragmentMatcher })
 });
 
 
@@ -22,6 +28,21 @@ const whitelistedQuery = gql`
         }
     }
 `
+
+// vehicle interface query
+const vehicleQuery = gql`
+    query getVehicles {
+      vehicles {
+        maxSpeed
+        ... on Airplane {
+          wingspan
+        }
+        ... on Car {
+          licensePlate
+        }
+      }
+    }
+`;
 
 
 // Whitelisted query asking for extra fields
@@ -55,8 +76,8 @@ const anotherBlacklistedQuery = gql`
 
 
 // Comment out the line below to test the whitelist functionality in action
-
-client.query({ query: whitelistedQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
-client.query({ query: masqueradeQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
-client.query({ query: blacklistedQuery, variables: { title: 'Jurassic Park' } }).then((data) => console.log(data.data));
-client.query({ query: anotherBlacklistedQuery }).then((data) => console.log(data.data));
+// client.query({ query: whitelistedQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
+// client.query({ query: masqueradeQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
+// client.query({ query: blacklistedQuery, variables: { title: 'Jurassic Park' } }).then((data) => console.log(data.data));
+// client.query({ query: anotherBlacklistedQuery }).then((data) => console.log(data.data));
+client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
