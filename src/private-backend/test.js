@@ -18,7 +18,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache({ fragmentMatcher })
 });
 
-
+// DO NOT construct this mutation string by hand, use graphiql to first test your mutation and then copy that exact string here
 const addCarMutation = gql`
   mutation addCar($maxSpeed: Int!, $licensePlate: String) {
     addCar(maxSpeed: $maxSpeed, licensePlate: $licensePlate) {
