@@ -9,7 +9,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
 });
 
-
 // create a request client
 const client = new ApolloClient({
   link: new HttpLink({
@@ -20,64 +19,16 @@ const client = new ApolloClient({
 });
 
 
-// List of queries
-const whitelistedQuery = gql`
-    query getBooksByAuthor($author: ID!) {
-        getBooksByAuthor(author: $author) {
-            title
-        }
+const addCarMutation = gql`
+  mutation addCar($maxSpeed: Int!, $licensePlate: String) {
+    addCar(maxSpeed: $maxSpeed, licensePlate: $licensePlate) {
+      maxSpeed
     }
+  }
 `
 
-// vehicle interface query
-const vehicleQuery = gql`
-    query getVehicles {
-      vehicles {
-        maxSpeed
-        ... on Airplane {
-          wingspan
-        }
-        ... on Car {
-          licensePlate
-        }
-      }
-    }
-`;
-
-
-// Whitelisted query asking for extra fields
-const masqueradeQuery = gql`
-    query getBooksByAuthor($author: ID!) {
-        getBooksByAuthor(author: $author) {
-            title
-            author
-        }
-    }
-`
-
-
-const blacklistedQuery = gql`
-    query getBooksByTitle($title: ID!) {
-        getBooksByTitle(title: $title) {
-            title
-            author
-        }
-    }
-`
-
-const anotherBlacklistedQuery = gql`
-    query allBooks {
-        books {
-            title
-            author
-        }
-    }
-`
-
-
-// Comment out the line below to test the whitelist functionality in action
-// client.query({ query: whitelistedQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
-// client.query({ query: masqueradeQuery, variables: { author: 'Rowling' } }).then((data) => console.log(data.data));
-// client.query({ query: blacklistedQuery, variables: { title: 'Jurassic Park' } }).then((data) => console.log(data.data));
-// client.query({ query: anotherBlacklistedQuery }).then((data) => console.log(data.data));
-client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
+client.mutate({
+  mutation: addCarMutation,
+  variables: { maxSpeed: 1000 }
+}).then((data) => console.log(data.data))
+  .catch(err => console.error(err));
