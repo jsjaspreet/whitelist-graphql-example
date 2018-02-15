@@ -27,8 +27,23 @@ const addCarMutation = gql`
   }
 `
 
-client.mutate({
-  mutation: addCarMutation,
-  variables: { maxSpeed: 1000 }
-}).then((data) => console.log(data.data))
-  .catch(err => console.error(err));
+
+// vehicle interface query
+const vehicleQuery = gql`
+  query getVehicles {
+    vehicles {
+      maxSpeed
+      ... on Airplane {
+        wingspan
+      }
+      ... on Car {
+        licensePlate
+      }
+    }
+  }
+`;
+
+client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
+client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
+client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
+client.query({ query: vehicleQuery }).then((data) => console.log(data.data));

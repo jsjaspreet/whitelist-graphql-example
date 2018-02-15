@@ -1,5 +1,5 @@
 const Book = `
-interface Vehicle {
+interface Vehicle @cacheControl(maxAge: 30) {
   maxSpeed: Int
 }
 

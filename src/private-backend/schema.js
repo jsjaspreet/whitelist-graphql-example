@@ -39,7 +39,10 @@ const resolvers = {
     addCar: (_, { maxSpeed, licensePlate }) => addCar(maxSpeed, licensePlate)
   },
   Query: {
-    vehicles: () => vehicles,
+    vehicles: () => {
+      console.log("GETTING VEHICLES FROM SERVER!");
+      return vehicles;
+    }
   },
 };
 

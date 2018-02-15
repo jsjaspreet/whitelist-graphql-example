@@ -10,6 +10,8 @@ const app = express();
 // Add routes
 app.use('/graphql', bodyParser.json(), graphqlExpress({
   schema,
+  tracing: true,
+  cacheControl: true
 }));
 
 // When using the OperationsStore graphiql won't work, but we can keep this up in development environments
