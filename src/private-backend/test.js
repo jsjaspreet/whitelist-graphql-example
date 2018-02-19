@@ -2,48 +2,30 @@ const { ApolloClient } = require('apollo-client');
 const fetch = require('node-fetch');
 const gql = require('graphql-tag');
 const { HttpLink } = require('apollo-link-http');
-const { InMemoryCache, IntrospectionFragmentMatcher } = require('apollo-cache-inmemory');
-const introspectionQueryResultData = require('./fragmentTypes.json');
-
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-  introspectionQueryResultData
-});
+const { InMemoryCache } = require('apollo-cache-inmemory');
 
 // create a request client
 const client = new ApolloClient({
   link: new HttpLink({
-    uri: 'http://localhost:3030/graphql',
+    uri: 'https://www.graphqlhub.com/graphql',
     fetch
   }),
-  cache: new InMemoryCache({ fragmentMatcher })
+  cache: new InMemoryCache()
 });
 
-// DO NOT construct this mutation string by hand, use graphiql to first test your mutation and then copy that exact string here
-const addCarMutation = gql`
-  mutation addCar($maxSpeed: Int!, $licensePlate: String) {
-    addCar(maxSpeed: $maxSpeed, licensePlate: $licensePlate) {
-      maxSpeed
-    }
-  }
-`
-
-
-// vehicle interface query
-const vehicleQuery = gql`
-  query getVehicles {
-    vehicles {
-      maxSpeed
-      ... on Airplane {
-        wingspan
-      }
-      ... on Car {
-        licensePlate
+const query = gql`
+  query getGifs {
+    giphy {
+      random {
+        id
+        url
       }
     }
   }
 `;
 
-client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
-client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
-client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
-client.query({ query: vehicleQuery }).then((data) => console.log(data.data));
+const watch = client.watchQuery({ query });
+watch.startPolling(3000);
+
+
+setInterval(() => console.log(watch.currentResult().data.giphy.random), 5000);
